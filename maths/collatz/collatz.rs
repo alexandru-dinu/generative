@@ -5,6 +5,8 @@
 
 use std::env;
 use std::process;
+use std::fs::File;
+use std::io::Write;
 
 pub struct Collatz {
     curr: u64,
@@ -47,8 +49,11 @@ fn main() {
 
     let limit: u64 = args[1].parse::<u64>().unwrap();
 
+    let mut f = File::create("out.txt").expect("Unable to create file");
+
     for n in 1..=limit {
         let xs: Vec<u64> = Collatz::new(n).collect();
-        let _sz: usize = xs.len() - 1;
+        let sz: usize = xs.len() - 1;
+        let _r = write!(f, "{}\n", sz);
     }
 }
